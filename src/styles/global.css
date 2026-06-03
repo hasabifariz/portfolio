@@ -1,0 +1,185 @@
+/* ============================================
+   GLOBAL STYLES — Portfolio Fariz
+   Elms Sans · Orange + White
+   ============================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --font-primary: 'Elms Sans', sans-serif;
+
+  --color-orange:       #E8541A;
+  --color-orange-soft:  #F5A070;
+  --color-orange-pale:  #FFF0E8;
+  --color-orange-warm:  #FFF8F4;
+  --color-orange-border:#F0C8A8;
+
+  --color-white:        #FFFFFF;
+  --color-ink:          #1A1A1A;
+  --color-ink-soft:     #444444;
+  --color-muted:        #888888;
+  --color-subtle:       #BBBBBB;
+  --color-faint:        #DDDDDD;
+
+  --color-dark-footer:  #1C1C1C;
+
+  --section-pad: 5rem 2rem;
+  --container:   1100px;
+}
+
+/* ---------- Base Reset ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+p {
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--color-muted);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-orange-warm); }
+::-webkit-scrollbar-thumb { background: var(--color-orange); border-radius: 2px; }
+
+/* ---------- Selection ---------- */
+::selection {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+
+/* ---------- Utility Classes ---------- */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 1.75rem;
+  height: 1.5px;
+  background: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 0.375rem;
+  letter-spacing: -0.02em;
+}
+
+.section-title span {
+  color: var(--color-orange);
+}
+
+.section-underline {
+  width: 1.75rem;
+  height: 3px;
+  background: var(--color-orange);
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-orange);
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232, 84, 26, 0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-orange);
+  font-family: var(--font-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  border: 1px solid var(--color-orange-border);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--color-orange-pale);
+  transform: translateY(-2px);
+}
+
+/* ---------- GSAP Initial States ---------- */
+.gsap-fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.gsap-fade-in {
+  opacity: 0;
+}
+
+.gsap-scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+}
