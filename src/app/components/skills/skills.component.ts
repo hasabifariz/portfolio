@@ -1,14 +1,13 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export interface Skill {
-  name: string;
+export interface SkillGroup {
   category: string;
-  level: number; // 0–100
+  items: string[];
 }
 
 @Component({
@@ -25,24 +24,21 @@ export interface Skill {
           <div class="section-underline"></div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="grid md:grid-cols-2 gap-3">
           <div
-            *ngFor="let skill of skills; let i = index"
-            class="skill-card bg-white border border-orange-border rounded-xl p-4"
+            *ngFor="let group of skillGroups; let i = index"
+            class="skill-card bg-white border border-orange-border rounded-xl p-5"
             [attr.data-index]="i"
           >
-            <div class="text-xs text-ink-faint font-light tracking-widest uppercase mb-1"
-                 style="font-size:0.6rem;">{{ skill.category }}</div>
-            <div class="text-sm font-semibold text-ink mb-3">{{ skill.name }}</div>
-
-            <!-- Bar -->
-            <div class="h-0.5 rounded-full bg-orange-border overflow-hidden">
-              <div
-                class="skill-bar h-full rounded-full bg-orange"
-                [class.bg-orange-soft]="skill.level < 80"
-                [style.width.%]="0"
-                [attr.data-level]="skill.level"
-              ></div>
+            <div class="text-xs text-ink-faint font-medium tracking-widest uppercase mb-3">
+              {{ group.category }}
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span *ngFor="let item of group.items"
+                    class="text-xs text-orange bg-orange-pale border border-orange-border
+                           px-3 py-1.5 rounded-full font-medium">
+                {{ item }}
+              </span>
             </div>
           </div>
         </div>
@@ -52,21 +48,20 @@ export interface Skill {
   `,
   styles: [`:host { display: block; }`],
 })
-export class SkillsComponent implements OnInit, AfterViewInit {
+export class SkillsComponent implements OnInit {
 
-  skills: Skill[] = [
-    { name: 'Angular',      category: 'framework',  level: 90 },
-    { name: 'TypeScript',   category: 'language',   level: 85 },
-    { name: 'RxJS',         category: 'reactive',   level: 75 },
-    { name: 'Tailwind CSS', category: 'styling',    level: 88 },
-    { name: 'PrimeNG',      category: 'ui lib',     level: 82 },
-    { name: 'GSAP',         category: 'animation',  level: 72 },
-    { name: 'React',        category: 'framework',  level: 68 },
-    { name: 'FastAPI',      category: 'backend',    level: 60 },
+  skillGroups: SkillGroup[] = [
+    { category: 'Frameworks',          items: ['Angular', 'ReactJS'] },
+    { category: 'UI Libraries',        items: ['PrimeNG', 'PrimeReact', 'MaterialUI', 'Tailwind CSS', 'PrimeFlex'] },
+    { category: 'Languages',           items: ['TypeScript', 'JavaScript', 'HTML', 'CSS'] },
+    { category: 'State & Reactivity',  items: ['RxJS', 'Angular Signals', 'React Hooks'] },
+    { category: 'Backend',             items: ['Node.js', 'Express.js', 'Neo4J'] },
+    { category: 'Tooling',             items: ['Git', 'GitKraken', 'Bitbucket', 'Docker'] },
+    { category: 'Monitoring & QA',     items: ['Elastic APM (RUM)', 'SonarQube'] },
+    { category: 'Project Management',  items: ['Jira', 'ClickUp'] },
   ];
 
   ngOnInit(): void {
-    // Cards stagger entrance
     gsap.from('.skill-card', {
       scrollTrigger: {
         trigger: '#skills',
@@ -78,25 +73,6 @@ export class SkillsComponent implements OnInit, AfterViewInit {
       duration: 0.6,
       stagger: 0.07,
       ease: 'power3.out',
-    });
-  }
-
-  ngAfterViewInit(): void {
-    // Skill bars fill on scroll
-    ScrollTrigger.create({
-      trigger: '#skills',
-      start: 'top 60%',
-      onEnter: () => {
-        document.querySelectorAll<HTMLElement>('.skill-bar').forEach((bar) => {
-          const level = bar.getAttribute('data-level') ?? '0';
-          gsap.to(bar, {
-            width: `${level}%`,
-            duration: 1.2,
-            ease: 'power2.out',
-            delay: 0.2,
-          });
-        });
-      },
     });
   }
 }

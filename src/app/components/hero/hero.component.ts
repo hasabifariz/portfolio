@@ -29,13 +29,14 @@ import { gsap } from 'gsap';
 
         <p class="hero-desc opacity-0 text-sm text-ink-muted font-light max-w-md mb-10"
            style="line-height:1.9;">
-          Crafting clean, scalable interfaces — from warehouse management systems
-          to interactive analytics dashboards. Based in Indonesia.
+          Building internal web applications for logistics, finance, and retail —
+          currently in Angular and TypeScript on a warehouse management system.
+          Based in Tangerang, Indonesia.
         </p>
 
         <div class="hero-btns opacity-0 flex flex-wrap gap-3">
           <a href="#projects" class="btn-primary">view projects</a>
-          <a href="#" class="btn-outline">download cv</a>
+          <a href="/assets/Fariz-Hasabi-Adiwijaya-CV.pdf" download class="btn-outline">download cv</a>
         </div>
 
         <!-- Scroll indicator -->
@@ -71,9 +72,9 @@ import { gsap } from 'gsap';
 export class HeroComponent implements OnInit {
 
   stats = [
-    { display: '2+',  value: 2,  label: 'years exp' },
-    { display: '10+', value: 10, label: 'projects' },
-    { display: '5+',  value: 5,  label: 'tech stack' },
+    { display: '4+',  value: 4,  label: 'years exp' },
+    { display: '9+',  value: 9,  label: 'projects' },
+    { display: '15+', value: 15, label: 'tech stack' },
     { display: '∞',   value: 0,  label: 'coffee cups' },
   ];
 

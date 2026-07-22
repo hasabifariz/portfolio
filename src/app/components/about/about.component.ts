@@ -22,14 +22,15 @@ gsap.registerPlugin(ScrollTrigger);
             <div class="section-underline"></div>
 
             <p class="text-sm text-ink-muted font-light leading-loose mb-6">
-              Frontend developer based in Tangerang, Indonesia. Passionate about
-              building intuitive, performant interfaces using Angular and modern
-              tooling. Previously worked with React and PrimeReact — now deep
-              in the Angular + WMS world at Flexofast.
+              Front-end developer with nearly 5 years of experience building
+              internal web applications for logistics, finance, and retail.
+              Currently working in Angular and TypeScript on a warehouse
+              management system, after several years in React.
             </p>
             <p class="text-sm text-ink-muted font-light leading-loose mb-8">
-              I care about clean code architecture, reactive patterns with RxJS,
-              and delivering polished user experiences that just <em>feel</em> right.
+              I focus on the parts users never see but always feel: reusable
+              component structure, consistent API patterns, and interfaces
+              that stay fast once the data grows into the thousands of <em>rows</em>.
             </p>
 
             <div class="flex flex-wrap gap-2">
@@ -59,14 +60,14 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class AboutComponent implements OnInit {
 
-  tags = ['Angular', 'TypeScript', 'RxJS', 'Tangerang, ID', 'Open to work'];
+  tags = ['Angular', 'TypeScript', 'RxJS', 'Tangerang, ID'];
 
   infos = [
-    { key: 'role',     value: 'Frontend Developer' },
-    { key: 'location', value: 'Tangerang, Indonesia' },
-    { key: 'stack',    value: 'Angular · React · FastAPI' },
+    { key: 'role',     value: 'Front-end Developer' },
+    { key: 'location', value: 'Legok, Tangerang' },
+    { key: 'stack',    value: 'Angular · React · Node.js' },
     { key: 'company',  value: 'Flexofast' },
-    { key: 'status',   value: 'Employed · Open to opportunities' },
+    { key: 'status',   value: 'Contract · On-site' },
   ];
 
   ngOnInit(): void {

@@ -17,12 +17,12 @@ import { CommonModule } from '@angular/common';
              [href]="link.href"
              target="_blank"
              rel="noopener noreferrer"
-             class="text-xs text-ink-subtle hover:text-orange transition-colors duration-200 font-light">
+             class="text-xs text-white/70 hover:text-orange transition-colors duration-200 font-light">
             {{ link.label }}
           </a>
         </div>
 
-        <div class="text-xs text-ink-soft font-light" style="font-size:0.6875rem;">
+        <div class="text-xs text-white/50 font-light" style="font-size:0.6875rem;">
           {{ year }} · Fariz · Built with Angular + GSAP
         </div>
 
@@ -35,8 +35,7 @@ export class FooterComponent {
   year = new Date().getFullYear();
 
   links = [
-    { label: 'github',   href: 'https://github.com/' },
-    { label: 'linkedin', href: 'https://linkedin.com/' },
-    { label: 'email',    href: 'mailto:fariz@email.com' },
+    { label: 'linkedin', href: 'https://www.linkedin.com/in/hasabifariz/' },
+    { label: 'email',    href: 'mailto:hasabifariz@gmail.com' },
   ];
 }

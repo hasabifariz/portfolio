@@ -19,10 +19,10 @@
 
   --color-white:        #FFFFFF;
   --color-ink:          #1A1A1A;
-  --color-ink-soft:     #444444;
-  --color-muted:        #888888;
-  --color-subtle:       #BBBBBB;
-  --color-faint:        #DDDDDD;
+  --color-ink-soft:     #333333;
+  --color-muted:        #5C5C5C;
+  --color-subtle:       #767676;
+  --color-faint:        #8F8F8F;
 
   --color-dark-footer:  #1C1C1C;
 
@@ -39,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 body {
@@ -74,6 +74,14 @@ p {
 ::selection {
   background: var(--color-orange);
   color: var(--color-white);
+}
+
+/* ---------- Focus (visible system feedback for keyboard nav) ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* ---------- Utility Classes ---------- */

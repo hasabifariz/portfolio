@@ -92,28 +92,76 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
       number: '01',
       title: 'WMS — Flexofast',
       description:
-        'Warehouse management system with real-time inventory tracking, barcode label printing, drag-and-drop tree structures, and large Excel export via background polling.',
-      tags: ['Angular', 'PrimeNG', 'FastAPI', 'RxJS'],
+        'Warehouse management system covering receiving, inventory, picking, order processing, and reporting. Includes barcode scanning, background Excel exports with polling, and a mobile interface for warehouse floor operations.',
+      tags: ['Angular', 'PrimeNG', 'RxJS', 'TypeScript'],
       thumbCells: ['hot','light','mid','light','faint','light','faint','light','hot','mid'],
     },
     {
       number: '02',
-      title: 'Analytics Dashboard',
+      title: 'Arya Noble — Internal Web Apps',
       description:
-        'Custom Apache Superset-based analytics platform with embedded dashboards, theme token customization, and Angular integration.',
-      tags: ['Superset', 'Angular', 'CSS', 'Python'],
-      thumbCells: ['mid','hot','light','faint','mid','faint','light','hot','mid','light'],
+        'Internal web applications for a beauty, skincare, and wellness company. Turned Figma designs into responsive interfaces and worked through Jira tickets on a regular release cycle.',
+      tags: ['React', 'PrimeReact', 'Tailwind'],
+      thumbCells: ['mid','light','hot','faint','light','hot','light','faint','mid','light'],
     },
     {
       number: '03',
-      title: 'Previous React Projects',
+      title: 'AXA AFI — Claims & User Management',
       description:
-        'Various frontend interfaces built with React and PrimeReact during placement period — forms, dashboards, and data-heavy UIs.',
-      tags: ['React', 'PrimeReact', 'TypeScript'],
-      thumbCells: ['light','mid','hot','light','faint','hot','faint','mid','light','hot'],
+        'UI components for claims processing and user management at an insurance and financial services company, plus responsive HTML email templates for consistent rendering across mail clients.',
+      tags: ['UI Components', 'API Integration', 'HTML Email'],
+      thumbCells: ['light','hot','mid','light','faint','light','hot','faint','light','mid'],
     },
     {
       number: '04',
+      title: 'AJAIB — Bank Bumi Arta',
+      description:
+        'User interfaces built from Functional Specification Documents and integrated with the supporting APIs for a banking client.',
+      tags: ['React', 'API Integration'],
+      thumbCells: ['faint','mid','light','hot','light','faint','mid','light','hot','light'],
+    },
+    {
+      number: '05',
+      title: 'Kawan Lama Group — Invoice Portal',
+      description:
+        'Web-based invoice management system covering tenants, users, and transactions, with real-time invoice generation and data updates built in ReactJS and MaterialUI.',
+      tags: ['React', 'MaterialUI', 'JavaScript'],
+      thumbCells: ['mid','hot','light','faint','mid','faint','light','hot','mid','light'],
+    },
+    {
+      number: '06',
+      title: 'Clarity — E-commerce Platform & Admin Panel',
+      description:
+        'Furniture sales platform serving both public and LKPP procurement channels, with an admin panel for content and inventory management built in ReactJS and MaterialUI.',
+      tags: ['React', 'MaterialUI', 'API Integration'],
+      thumbCells: ['light','mid','hot','light','faint','hot','faint','mid','light','hot'],
+    },
+    {
+      number: '07',
+      title: 'WMS Honda Line 1 & 2',
+      description:
+        'Extended a warehouse management system for inventory tracking and logistics, adding features for reporting, search, and tracking.',
+      tags: ['React', 'MaterialUI'],
+      thumbCells: ['hot','faint','light','mid','light','hot','light','faint','mid','light'],
+    },
+    {
+      number: '08',
+      title: 'ITAM — IT Asset Management',
+      description:
+        'Web-based IT asset tracking and storage system built for Telkom Indonesia, with optimized database queries to cut down load times.',
+      tags: ['Node.js', 'Express.js', 'Neo4J'],
+      thumbCells: ['light','light','hot','faint','mid','light','faint','hot','light','mid'],
+    },
+    {
+      number: '09',
+      title: 'UIMax — ISP & OSP',
+      description:
+        'Refactored a unified inventory management platform for Telkom Indonesia to be easier to maintain and faster to run, plus API queries feeding the reporting layer.',
+      tags: ['Node.js', 'Express.js', 'Refactor'],
+      thumbCells: ['mid','light','faint','hot','light','light','mid','faint','hot','light'],
+    },
+    {
+      number: '10',
       title: 'Portfolio — this site',
       description:
         'Single-page portfolio built with Angular, Tailwind CSS, GSAP ScrollTrigger animations, and Elms Sans typography.',

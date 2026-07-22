@@ -53,6 +53,9 @@
             "development": { "buildTarget": "fariz-portfolio:build:development" }
           },
           "defaultConfiguration": "development"
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
