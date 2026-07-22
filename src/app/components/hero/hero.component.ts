@@ -36,7 +36,7 @@ import { gsap } from 'gsap';
 
         <div class="hero-btns opacity-0 flex flex-wrap gap-3">
           <a href="#projects" class="btn-primary">view projects</a>
-          <a href="/assets/Fariz-Hasabi-Adiwijaya-CV.pdf" download class="btn-outline">download cv</a>
+          <a href="assets/Fariz-Hasabi-Adiwijaya-CV.pdf" download class="btn-outline">download cv</a>
         </div>
 
         <!-- Scroll indicator -->
