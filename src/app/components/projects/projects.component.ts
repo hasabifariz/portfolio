@@ -84,9 +84,13 @@ gsap.registerPlugin(ScrollTrigger);
                       {{ project.title }}
                     }
                   </h3>
-                  <p class="text-xs text-ink-muted leading-relaxed mb-4 line-clamp-4" [title]="project.description">
-                    {{ project.description }}
-                  </p>
+                  <!-- themed tooltip with the full text; grows upward over the card so it isn't clipped -->
+                  <div class="relative mb-4">
+                    <p class="desc text-xs text-ink-muted leading-relaxed line-clamp-4 outline-none" tabindex="0">
+                      {{ project.description }}
+                    </p>
+                    <div class="desc-tip" aria-hidden="true">{{ project.description }}</div>
+                  </div>
                   <div class="mt-auto flex flex-wrap gap-1.5">
                     @for (tag of project.tags; track tag) {
                       <span
@@ -141,6 +145,29 @@ gsap.registerPlugin(ScrollTrigger);
     @media (min-width: 768px) { .nav-btn { display: grid; } }
     .nav-btn:hover { background: #C23E0E; }
     .nav-btn.is-hidden { opacity: 0; pointer-events: none; }
+
+    .desc-tip {
+      position: absolute;
+      left: -0.5rem;
+      right: -0.5rem;
+      bottom: -0.5rem;
+      z-index: 5;
+      padding: 0.75rem 0.875rem;
+      border-radius: 0.75rem;
+      border-top: 2px solid var(--color-orange);
+      background: var(--color-ink);
+      color: rgba(255, 255, 255, .88);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      box-shadow: 0 12px 28px -8px rgba(26, 26, 26, .35);
+      pointer-events: none;           /* hover stays on the text underneath, no flicker */
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .desc:hover + .desc-tip,
+    .desc:focus-visible + .desc-tip { opacity: 1; transform: none; }
+    .project-track.dragging .desc-tip { opacity: 0; }
 
     .project-card {
       box-shadow:
