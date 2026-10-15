@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ABOUT_TAGS, ABOUT_INFO } from '../../data/profile';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -60,15 +61,9 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class AboutComponent implements OnInit {
 
-  tags = ['Angular', 'TypeScript', 'RxJS', 'Tangerang, ID'];
+  tags = ABOUT_TAGS;
 
-  infos = [
-    { key: 'role',     value: 'Front-end Developer' },
-    { key: 'location', value: 'Legok, Tangerang' },
-    { key: 'stack',    value: 'Angular · React · Node.js' },
-    { key: 'company',  value: 'Flexofast' },
-    { key: 'status',   value: 'Contract · On-site' },
-  ];
+  infos = ABOUT_INFO;
 
   ngOnInit(): void {
     gsap.from('.about-left', {

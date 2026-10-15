@@ -1,21 +1,15 @@
 import {
   Component, OnInit, AfterViewInit,
-  ElementRef, QueryList, ViewChildren
+  ElementRef, QueryList, ViewChild, ViewChildren
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { PROJECTS } from '../../data/projects';
+
 gsap.registerPlugin(ScrollTrigger);
 
-export interface Project {
-  number: string;
-  title: string;
-  description: string;
-  tags: string[];
-  thumbCells: ('hot' | 'mid' | 'light' | 'faint')[];
-  link?: string;
-}
 
 @Component({
   selector: 'app-projects',
@@ -25,24 +19,43 @@ export interface Project {
     <section id="projects" class="bg-white py-24">
       <div class="container mx-auto px-8 max-w-5xl">
 
-        <div class="projects-header mb-12">
+        <div class="projects-header mb-8">
           <div class="section-eyebrow">what I've built</div>
           <h2 class="section-title">featured <span>projects</span></h2>
-          <div class="section-underline"></div>
+          <div class="section-underline !mb-0"></div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="relative">
+        <button type="button" aria-label="Previous projects" (click)="scroll(-1)"
+                class="nav-btn left-0 -translate-x-1/2" [class.is-hidden]="atStart">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.25"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button type="button" aria-label="Next projects" (click)="scroll(1)"
+                class="nav-btn right-0 translate-x-1/2" [class.is-hidden]="atEnd">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.25"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <!-- native scroll + snap for touch; mouse drag handled in onDragStart -->
+        <div #track tabindex="0" aria-label="Projects, scroll horizontally"
+             class="project-track flex gap-6 overflow-x-auto snap-x snap-mandatory py-8 -my-4 -mx-4 px-4 scroll-px-4"
+             [class.dragging]="dragging"
+             [class.fade-start]="!atStart" [class.fade-end]="!atEnd"
+             (scroll)="updateEdges()"
+             (pointerdown)="onDragStart($event)" (pointermove)="onDragMove($event)"
+             (pointerup)="onDragEnd()" (pointercancel)="onDragEnd()">
           <div
             #projectCard
             *ngFor="let project of projects; let i = index"
-            class="project-card group bg-white border border-orange-border rounded-2xl
-                   overflow-hidden cursor-pointer"
+            class="project-card group flex-none w-[85%] sm:w-80 md:w-96 h-[23rem] snap-start flex flex-col
+                   bg-white border border-orange-border rounded-2xl overflow-hidden"
             (mouseenter)="onCardEnter($event, i)"
             (mouseleave)="onCardLeave($event, i)"
             (mousemove)="onCardMove($event, i)"
           >
             <!-- Thumb placeholder -->
-            <div class="h-36 bg-orange-pale relative overflow-hidden">
+            <div class="h-28 flex-none bg-orange-pale relative overflow-hidden">
               <!-- Abstract grid pattern -->
               <div class="absolute inset-0 grid grid-cols-5 grid-rows-2 gap-1.5 p-3 opacity-70">
                 <div *ngFor="let cell of project.thumbCells"
@@ -55,19 +68,19 @@ export interface Project {
               </div>
               <!-- Project number watermark -->
               <span class="absolute top-3 right-4 text-5xl font-bold text-orange/10"
-                    style="letter-spacing:-0.04em;">{{ project.number }}</span>
+                    style="letter-spacing:-0.04em;">{{ (i + 1).toString().padStart(2, '0') }}</span>
             </div>
 
             <!-- Body -->
-            <div class="p-5">
-              <h3 class="text-base font-semibold text-ink mb-1.5 group-hover:text-orange
+            <div class="p-5 flex-1 flex flex-col min-h-0">
+              <h3 class="text-base font-semibold text-ink mb-1.5 line-clamp-2 group-hover:text-orange
                          transition-colors duration-200">
                 {{ project.title }}
               </h3>
-              <p class="text-xs text-ink-muted font-light leading-relaxed mb-4">
+              <p class="text-xs text-ink-muted font-light leading-relaxed mb-4 line-clamp-4" [title]="project.description">
                 {{ project.description }}
               </p>
-              <div class="flex flex-wrap gap-1.5">
+              <div class="mt-auto flex flex-wrap gap-1.5">
                 <span *ngFor="let tag of project.tags"
                       class="text-xs text-orange bg-orange-pale border border-orange-border
                              px-2.5 py-1 rounded-full font-medium"
@@ -78,97 +91,103 @@ export interface Project {
             </div>
           </div>
         </div>
+        </div>
 
       </div>
     </section>
   `,
-  styles: [`:host { display: block; }`],
+  styles: [`
+    :host { display: block; }
+    .project-track { scrollbar-width: thin; scrollbar-color: var(--color-orange-border) transparent; }
+    @media (pointer: fine) { .project-track { cursor: grab; } }
+    /* snap off while dragging, or the browser fights every scrollLeft write */
+    .project-track.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+
+    /* fade the cut-off edge so a half card reads as "more this way" */
+    .project-track.fade-end   { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent); }
+    .project-track.fade-start { -webkit-mask-image: linear-gradient(to left,  #000 calc(100% - 1rem), transparent); mask-image: linear-gradient(to left,  #000 calc(100% - 1rem), transparent); }
+    .project-track.fade-start.fade-end {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      z-index: 10;
+      display: none;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      margin-top: -1.5rem;
+      border-radius: 9999px;
+      background: #fff;
+      color: var(--color-orange);
+      border: 1px solid var(--color-orange-border);
+      box-shadow: 0 8px 24px -8px rgba(26, 26, 26, .18);
+      transition: background .2s ease, color .2s ease, opacity .2s ease, box-shadow .2s ease;
+    }
+    @media (min-width: 768px) { .nav-btn { display: grid; } }
+    .nav-btn:hover { background: var(--color-orange); color: #fff; box-shadow: 0 8px 24px -6px rgba(232, 84, 26, .45); }
+    .nav-btn.is-hidden { opacity: 0; pointer-events: none; }
+
+    .project-card {
+      box-shadow:
+        0 1px 2px rgba(26, 26, 26, .04),
+        0 6px 12px -6px rgba(26, 26, 26, .08),
+        0 12px 20px -12px rgba(232, 84, 26, .14);
+      transition: box-shadow .3s ease;
+    }
+    .project-card:hover {
+      box-shadow:
+        0 2px 4px rgba(26, 26, 26, .05),
+        0 10px 20px -8px rgba(26, 26, 26, .12),
+        0 20px 28px -16px rgba(232, 84, 26, .25);
+    }
+  `],
 })
 export class ProjectsComponent implements OnInit, AfterViewInit {
   @ViewChildren('projectCard') cards!: QueryList<ElementRef>;
+  @ViewChild('track') track!: ElementRef<HTMLElement>;
 
-  projects: Project[] = [
-    {
-      number: '01',
-      title: 'WMS — Flexofast',
-      description:
-        'Warehouse management system covering receiving, inventory, picking, order processing, and reporting. Includes barcode scanning, background Excel exports with polling, and a mobile interface for warehouse floor operations.',
-      tags: ['Angular', 'PrimeNG', 'RxJS', 'TypeScript'],
-      thumbCells: ['hot','light','mid','light','faint','light','faint','light','hot','mid'],
-    },
-    {
-      number: '02',
-      title: 'Arya Noble — Internal Web Apps',
-      description:
-        'Internal web applications for a beauty, skincare, and wellness company. Turned Figma designs into responsive interfaces and worked through Jira tickets on a regular release cycle.',
-      tags: ['React', 'PrimeReact', 'Tailwind'],
-      thumbCells: ['mid','light','hot','faint','light','hot','light','faint','mid','light'],
-    },
-    {
-      number: '03',
-      title: 'AXA AFI — Claims & User Management',
-      description:
-        'UI components for claims processing and user management at an insurance and financial services company, plus responsive HTML email templates for consistent rendering across mail clients.',
-      tags: ['UI Components', 'API Integration', 'HTML Email'],
-      thumbCells: ['light','hot','mid','light','faint','light','hot','faint','light','mid'],
-    },
-    {
-      number: '04',
-      title: 'AJAIB — Bank Bumi Arta',
-      description:
-        'User interfaces built from Functional Specification Documents and integrated with the supporting APIs for a banking client.',
-      tags: ['React', 'API Integration'],
-      thumbCells: ['faint','mid','light','hot','light','faint','mid','light','hot','light'],
-    },
-    {
-      number: '05',
-      title: 'Kawan Lama Group — Invoice Portal',
-      description:
-        'Web-based invoice management system covering tenants, users, and transactions, with real-time invoice generation and data updates built in ReactJS and MaterialUI.',
-      tags: ['React', 'MaterialUI', 'JavaScript'],
-      thumbCells: ['mid','hot','light','faint','mid','faint','light','hot','mid','light'],
-    },
-    {
-      number: '06',
-      title: 'Clarity — E-commerce Platform & Admin Panel',
-      description:
-        'Furniture sales platform serving both public and LKPP procurement channels, with an admin panel for content and inventory management built in ReactJS and MaterialUI.',
-      tags: ['React', 'MaterialUI', 'API Integration'],
-      thumbCells: ['light','mid','hot','light','faint','hot','faint','mid','light','hot'],
-    },
-    {
-      number: '07',
-      title: 'WMS Honda Line 1 & 2',
-      description:
-        'Extended a warehouse management system for inventory tracking and logistics, adding features for reporting, search, and tracking.',
-      tags: ['React', 'MaterialUI'],
-      thumbCells: ['hot','faint','light','mid','light','hot','light','faint','mid','light'],
-    },
-    {
-      number: '08',
-      title: 'ITAM — IT Asset Management',
-      description:
-        'Web-based IT asset tracking and storage system built for Telkom Indonesia, with optimized database queries to cut down load times.',
-      tags: ['Node.js', 'Express.js', 'Neo4J'],
-      thumbCells: ['light','light','hot','faint','mid','light','faint','hot','light','mid'],
-    },
-    {
-      number: '09',
-      title: 'UIMax — ISP & OSP',
-      description:
-        'Refactored a unified inventory management platform for Telkom Indonesia to be easier to maintain and faster to run, plus API queries feeding the reporting layer.',
-      tags: ['Node.js', 'Express.js', 'Refactor'],
-      thumbCells: ['mid','light','faint','hot','light','light','mid','faint','hot','light'],
-    },
-    {
-      number: '10',
-      title: 'Portfolio — this site',
-      description:
-        'Single-page portfolio built with Angular, Tailwind CSS, GSAP ScrollTrigger animations, and Elms Sans typography.',
-      tags: ['Angular', 'Tailwind', 'GSAP', 'Elms Sans'],
-      thumbCells: ['faint','light','mid','hot','light','mid','hot','light','faint','mid'],
-    },
-  ];
+  projects = PROJECTS;
+
+  dragging = false;
+  private dragStartX = 0;
+  private dragStartLeft = 0;
+
+  onDragStart(e: PointerEvent): void {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return; // touch scrolls natively
+    const el = this.track.nativeElement;
+    this.dragStartX = e.clientX;
+    this.dragStartLeft = el.scrollLeft;
+    this.dragging = true;
+    el.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  }
+
+  onDragMove(e: PointerEvent): void {
+    if (!this.dragging) return;
+    this.track.nativeElement.scrollLeft = this.dragStartLeft - (e.clientX - this.dragStartX);
+  }
+
+  onDragEnd(): void {
+    this.dragging = false;
+  }
+
+  atStart = true;
+  atEnd = false;
+
+  updateEdges(): void {
+    const el = this.track.nativeElement;
+    this.atStart = el.scrollLeft < 8;
+    this.atEnd = el.scrollLeft + el.clientWidth > el.scrollWidth - 8;
+  }
+
+  scroll(dir: 1 | -1): void {
+    const el = this.track.nativeElement;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  }
 
   ngOnInit(): void {
     gsap.from('.project-card', {
@@ -190,13 +209,14 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   onCardEnter(e: MouseEvent, i: number): void {
     const card = this.cards.get(i)?.nativeElement;
     if (!card) return;
-    gsap.to(card, { scale: 1.02, duration: 0.3, ease: 'power2.out' });
+    gsap.to(card, { y: -6, scale: 1.02, duration: 0.3, ease: 'power2.out' });
   }
 
   onCardLeave(e: MouseEvent, i: number): void {
     const card = this.cards.get(i)?.nativeElement;
     if (!card) return;
     gsap.to(card, {
+      y: 0,
       scale: 1,
       rotateX: 0,
       rotateY: 0,
@@ -207,14 +227,14 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
   onCardMove(e: MouseEvent, i: number): void {
     const card = this.cards.get(i)?.nativeElement;
-    if (!card) return;
+    if (!card || this.dragging) return;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const cx = rect.width / 2;
     const cy = rect.height / 2;
-    const rotX = ((y - cy) / cy) * -5;
-    const rotY = ((x - cx) / cx) * 5;
+    const rotX = ((y - cy) / cy) * -6;
+    const rotY = ((x - cx) / cx) * 6;
 
     gsap.to(card, {
       rotateX: rotX,

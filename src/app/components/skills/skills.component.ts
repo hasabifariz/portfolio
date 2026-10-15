@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SKILL_GROUPS } from '../../data/skills';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-export interface SkillGroup {
-  category: string;
-  items: string[];
-}
 
 @Component({
   selector: 'app-skills',
@@ -50,16 +46,7 @@ export interface SkillGroup {
 })
 export class SkillsComponent implements OnInit {
 
-  skillGroups: SkillGroup[] = [
-    { category: 'Frameworks',          items: ['Angular', 'ReactJS'] },
-    { category: 'UI Libraries',        items: ['PrimeNG', 'PrimeReact', 'MaterialUI', 'Tailwind CSS', 'PrimeFlex'] },
-    { category: 'Languages',           items: ['TypeScript', 'JavaScript', 'HTML', 'CSS'] },
-    { category: 'State & Reactivity',  items: ['RxJS', 'Angular Signals', 'React Hooks'] },
-    { category: 'Backend',             items: ['Node.js', 'Express.js', 'Neo4J'] },
-    { category: 'Tooling',             items: ['Git', 'GitKraken', 'Bitbucket', 'Docker'] },
-    { category: 'Monitoring & QA',     items: ['Elastic APM (RUM)', 'SonarQube'] },
-    { category: 'Project Management',  items: ['Jira', 'ClickUp'] },
-  ];
+  skillGroups = SKILL_GROUPS;
 
   ngOnInit(): void {
     gsap.from('.skill-card', {

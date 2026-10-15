@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CONTACT_LINKS } from '../../data/profile';
 
 @Component({
   selector: 'app-footer',
@@ -34,8 +35,5 @@ import { CommonModule } from '@angular/common';
 export class FooterComponent {
   year = new Date().getFullYear();
 
-  links = [
-    { label: 'linkedin', href: 'https://www.linkedin.com/in/hasabifariz/' },
-    { label: 'email',    href: 'mailto:hasabifariz@gmail.com' },
-  ];
+  links = CONTACT_LINKS;
 }
