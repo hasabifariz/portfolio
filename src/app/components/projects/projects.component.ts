@@ -27,12 +27,12 @@ gsap.registerPlugin(ScrollTrigger);
 
         <div class="relative">
         <button type="button" aria-label="Previous projects" (click)="scroll(-1)"
-                class="nav-btn left-0 -translate-x-1/2" [class.is-hidden]="atStart">
+                class="nav-btn prev" [class.is-hidden]="atStart">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.25"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         </button>
         <button type="button" aria-label="Next projects" (click)="scroll(1)"
-                class="nav-btn right-0 translate-x-1/2" [class.is-hidden]="atEnd">
+                class="nav-btn next" [class.is-hidden]="atEnd">
           <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.25"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </button>
@@ -116,6 +116,7 @@ gsap.registerPlugin(ScrollTrigger);
       mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
     }
 
+    /* positioned with margins (not transform) so it never shifts sideways */
     .nav-btn {
       position: absolute;
       top: 50%;
@@ -126,14 +127,14 @@ gsap.registerPlugin(ScrollTrigger);
       height: 3rem;
       margin-top: -1.5rem;
       border-radius: 9999px;
-      background: #fff;
-      color: var(--color-orange);
-      border: 1px solid var(--color-orange-border);
-      box-shadow: 0 8px 24px -8px rgba(26, 26, 26, .18);
-      transition: background .2s ease, color .2s ease, opacity .2s ease, box-shadow .2s ease;
+      color: #fff;
+      background: var(--color-orange);
+      transition: background .2s ease, opacity .2s ease;
     }
+    .nav-btn.prev { left: 0; margin-left: -1.5rem; }
+    .nav-btn.next { right: 0; margin-right: -1.5rem; }
     @media (min-width: 768px) { .nav-btn { display: grid; } }
-    .nav-btn:hover { background: var(--color-orange); color: #fff; box-shadow: 0 8px 24px -6px rgba(232, 84, 26, .45); }
+    .nav-btn:hover { background: #C23E0E; }
     .nav-btn.is-hidden { opacity: 0; pointer-events: none; }
 
     .project-card {

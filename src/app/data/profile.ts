@@ -8,7 +8,7 @@ export const HERO_STACK = ['Angular', 'TypeScript', 'Tailwind CSS', 'GSAP'];
 // About: info card. Icons are picked by key in about.component (role, location, stack, company).
 export const ABOUT_INFO = [
   { key: 'role',     value: 'Front-end Developer' },
-  { key: 'location', value: 'Legok, Tangerang' },
+  { key: 'location', value: 'Legok, Kab. Tangerang' },
   { key: 'stack',    value: 'Angular · React · Next.js' },
   { key: 'company',  value: 'Flexofast · Contract, on-site' },
 ];

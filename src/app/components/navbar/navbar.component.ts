@@ -31,7 +31,7 @@ import { gsap } from 'gsap';
           </a>
           <a href="#contact"
              class="btn-primary text-xs px-5 py-2.5">
-            hire me
+            contact me
           </a>
         </div>
 
@@ -69,7 +69,7 @@ import { gsap } from 'gsap';
           {{ link.label }}
         </a>
         <a href="#contact" class="btn-primary text-xs self-start" (click)="menuOpen = false">
-          hire me
+          contact me
         </a>
       </div>
     </nav>

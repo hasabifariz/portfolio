@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HERO_STACK, CV_PATH } from '../../data/profile';
 import { PROJECTS } from '../../data/projects';
@@ -69,12 +69,16 @@ import { gsap } from 'gsap';
 
       <!-- Stats -->
       <div class="hero-anim opacity-0 w-full max-w-3xl mx-auto px-6 mt-16">
-        <dl class="grid grid-cols-2 md:grid-cols-4 rounded-2xl border border-orange-border bg-white/60 backdrop-blur-md divide-orange-border/70 md:divide-x">
+        <!-- glass is its own layer: backdrop-filter would flatten the 3D numbers if it sat on the dl -->
+        <div #statsCard class="stats-3d relative" (pointermove)="tilt($event)" (pointerleave)="resetTilt()">
+        <div class="glass-card absolute inset-0 rounded-2xl" aria-hidden="true"></div>
+        <dl class="relative grid grid-cols-2 md:grid-cols-4 divide-white/60 md:divide-x">
           <div *ngFor="let stat of stats" class="flex flex-col-reverse items-center py-4 px-2">
             <dt class="text-ink-subtle tracking-widest uppercase mt-1" style="font-size:0.625rem;">{{ stat.label }}</dt>
             <dd class="text-2xl font-bold text-orange">{{ stat.display }}</dd>
           </div>
         </dl>
+        </div>
       </div>
 
       <a href="#about"
@@ -153,6 +157,32 @@ import { gsap } from 'gsap';
       .stage { filter: url(#hero-goo) blur(40px); }
     }
 
+    .stats-3d {
+      --rx: 0deg; --ry: 0deg;
+      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+      transform-style: preserve-3d;
+      transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+    }
+    .stats-3d dl, .stats-3d dl > div { transform-style: preserve-3d; }
+    .stats-3d dd { transform: translateZ(36px); }
+    .stats-3d dt { transform: translateZ(18px); }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, .18) 100%);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, .7);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .8),
+        inset 0 -1px 0 rgba(232, 84, 26, .08),
+        0 6px 0 -1px rgba(232, 84, 26, .14),
+        0 20px 40px -16px rgba(232, 84, 26, .35);
+    }
+    /* no backdrop-filter: fall back to a near-solid card so the numbers stay readable */
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .glass-card { background: rgba(255, 255, 255, .85); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .orbit, .blob { animation: none; }
     }
@@ -170,6 +200,23 @@ export class HeroComponent implements AfterViewInit {
     { display: String(SKILL_GROUPS.reduce((n, g) => n + g.items.length, 0)), label: 'tools & tech' },
     { display: String(EXPERIENCE.length), label: 'companies' },
   ];
+
+  @ViewChild('statsCard') statsCard!: ElementRef<HTMLElement>;
+
+  tilt(e: PointerEvent): void {
+    if (e.pointerType !== 'mouse' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = this.statsCard.nativeElement;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;   // -0.5 .. 0.5
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    el.style.setProperty('--ry', `${x * 10}deg`);
+    el.style.setProperty('--rx', `${y * -14}deg`);
+  }
+
+  resetTilt(): void {
+    this.statsCard.nativeElement.style.setProperty('--rx', '0deg');
+    this.statsCard.nativeElement.style.setProperty('--ry', '0deg');
+  }
 
   ngAfterViewInit(): void {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
