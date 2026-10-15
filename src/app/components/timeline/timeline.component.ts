@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [],
   template: `
-    <section id="experience" class="bg-orange-warm py-24">
+    <section id="experience" class="bg-orange-warm py-16 md:py-24">
       <div class="container mx-auto px-8 max-w-5xl">
     
         <div class="timeline-header mb-12">
@@ -25,7 +25,7 @@ gsap.registerPlugin(ScrollTrigger);
         <div class="flex flex-col">
           @for (item of items; track item; let last = $last) {
             <div
-              class="tl-item flex gap-5"
+              class="tl-item flex gap-3 md:gap-5"
               >
               <!-- Line + Dot -->
               <div class="flex flex-col items-center flex-shrink-0 pt-6">
@@ -44,7 +44,7 @@ gsap.registerPlugin(ScrollTrigger);
                 }
               </div>
               <!-- Content card -->
-              <article class="tl-card flex-1 min-w-0 mb-6 rounded-xl border p-5 md:p-6"
+              <article class="tl-card flex-1 min-w-0 mb-6 rounded-xl border p-4 md:p-6"
                 [class.is-active]="item.active">
                 <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-3">
                   <div>

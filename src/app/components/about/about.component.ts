@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [],
   template: `
-    <section id="about" class="bg-white py-24">
+    <section id="about" class="bg-white py-16 md:py-24">
       <div class="container mx-auto px-8 max-w-5xl">
 
         <!-- eyebrow sits in its own row so the info cards line up with the title and the last paragraph -->

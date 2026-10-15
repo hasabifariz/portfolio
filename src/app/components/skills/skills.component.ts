@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [],
   template: `
-    <section id="skills" class="bg-orange-warm py-24">
+    <section id="skills" class="bg-orange-warm py-16 md:py-24">
       <div class="container mx-auto px-8 max-w-5xl">
     
         <div class="skills-header mb-12">
@@ -20,10 +20,10 @@ gsap.registerPlugin(ScrollTrigger);
           <div class="section-underline"></div>
         </div>
     
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-3 md:gap-4">
           @for (group of skillGroups; track group; let i = $index) {
             <div
-              class="skill-card group border border-orange-border rounded-xl p-5"
+              class="skill-card group border border-orange-border rounded-xl p-4 md:p-5"
               [attr.data-index]="i"
               >
             <div class="text-xs text-ink-faint font-medium tracking-widest uppercase mb-3

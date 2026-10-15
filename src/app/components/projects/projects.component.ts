@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
   standalone: true,
   imports: [],
   template: `
-    <section id="projects" class="bg-white py-24">
+    <section id="projects" class="bg-white py-16 md:py-24">
       <div class="container mx-auto px-8 max-w-5xl">
     
         <div class="projects-header mb-8">
@@ -47,7 +47,7 @@ gsap.registerPlugin(ScrollTrigger);
             @for (project of projects; track project; let i = $index) {
               <div
                 #projectCard
-            class="project-card group relative flex-none w-[85%] sm:w-80 md:w-96 h-[23rem] snap-start flex flex-col
+            class="project-card group relative flex-none w-[85%] sm:w-80 md:w-96 snap-start flex flex-col
                    bg-white border border-orange-border rounded-2xl overflow-hidden"
                 (mouseenter)="onCardEnter($event, i)"
                 (mouseleave)="onCardLeave($event, i)"
@@ -95,7 +95,7 @@ gsap.registerPlugin(ScrollTrigger);
                     @for (tag of project.tags; track tag) {
                       <span
                       class="text-xs text-orange bg-orange-pale border border-orange-border
-                             px-2.5 py-1 rounded-full font-medium"
+                             px-2.5 py-1 rounded-full font-medium max-w-full truncate"
                         style="font-size:0.6875rem;">
                         {{ tag }}
                       </span>

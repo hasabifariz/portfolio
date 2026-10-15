@@ -9,7 +9,7 @@ import { EMAIL, LINKEDIN } from '../../data/profile';
   template: `
     <!-- vertical padding lives on wrappers: global .container resets padding to 0 2rem -->
     <footer id="contact" class="bg-ink text-white">
-      <div class="py-24">
+      <div class="py-16 md:py-24">
       <div class="container mx-auto px-8 max-w-5xl">
         <div class="section-eyebrow">get in touch</div>
         <h2 class="section-title !text-white max-w-xl">
