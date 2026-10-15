@@ -24,10 +24,10 @@ export const PROJECTS: Project[] = [
     thumbCells: ['mid','faint','hot','light','mid','light','hot','faint','light','mid'],
   },
   {
-    title: 'Flexofast — WMS ',
+    title: 'Flexofast — Flexoflow WMS OMS ',
     description:
       'Warehouse management system covering receiving, inventory, picking, order processing, and reporting. Includes barcode scanning, background Excel exports with polling, and a mobile interface for warehouse floor operations.',
-    tags: ['Angular', 'PrimeNG', 'RxJS', 'TypeScript'],
+    tags: ['Angular', 'PrimeNG', 'TypeScript'],
     thumbCells: ['hot','light','mid','light','faint','light','faint','light','hot','mid'],
   },
   {

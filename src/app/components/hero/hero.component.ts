@@ -1,6 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HERO_STACK, CV_PATH } from '../../data/profile';
+import { PROJECTS } from '../../data/projects';
+import { SKILL_GROUPS } from '../../data/skills';
+import { EXPERIENCE } from '../../data/experience';
 import { gsap } from 'gsap';
 
 @Component({
@@ -160,11 +163,12 @@ export class HeroComponent implements AfterViewInit {
   stack = HERO_STACK;
   cvPath = CV_PATH;
 
+  // counts follow the data files; years is hand-set (update it each year)
   stats = [
-    { display: '4+',  label: 'years exp' },
-    { display: '9+',  label: 'projects' },
-    { display: '15+', label: 'tech stack' },
-    { display: '∞',   label: 'coffee cups' },
+    { display: '4+', label: 'years exp' },
+    { display: String(PROJECTS.length), label: 'projects' },
+    { display: String(SKILL_GROUPS.reduce((n, g) => n + g.items.length, 0)), label: 'tools & tech' },
+    { display: String(EXPERIENCE.length), label: 'companies' },
   ];
 
   ngAfterViewInit(): void {

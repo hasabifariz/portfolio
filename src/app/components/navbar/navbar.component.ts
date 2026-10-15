@@ -22,7 +22,10 @@ import { gsap } from 'gsap';
         <div class="hidden md:flex items-center gap-8">
           <a *ngFor="let link of navLinks"
              [href]="link.href"
-             class="text-ink-subtle text-xs hover:text-orange transition-colors duration-200 tracking-wide"
+             class="text-xs hover:text-orange transition-colors duration-200 tracking-wide"
+             [class.text-orange]="active === link.href"
+             [class.text-ink-subtle]="active !== link.href"
+             [attr.aria-current]="active === link.href ? 'location' : null"
           >
             {{ link.label }}
           </a>
@@ -34,9 +37,10 @@ import { gsap } from 'gsap';
 
         <!-- Mobile Menu Button -->
         <button
-          class="md:hidden flex flex-col gap-1.5 p-1"
+          class="md:hidden w-11 h-11 -mr-3 flex flex-col items-center justify-center gap-1.5"
           (click)="toggleMenu()"
           aria-label="Toggle menu"
+          [attr.aria-expanded]="menuOpen"
         >
           <span class="block w-5 h-px bg-ink transition-all duration-200"
                 [class.rotate-45]="menuOpen"
@@ -53,11 +57,13 @@ import { gsap } from 'gsap';
       <!-- Mobile Menu -->
       <div
         *ngIf="menuOpen"
-        class="md:hidden bg-white border-t border-orange-border px-8 py-4 flex flex-col gap-4"
+        class="md:hidden bg-white border-t border-orange-border px-8 py-4 flex flex-col gap-1"
       >
         <a *ngFor="let link of navLinks"
            [href]="link.href"
-           class="text-sm text-ink-muted"
+           class="text-sm py-2"
+           [class.text-orange]="active === link.href"
+           [class.text-ink-muted]="active !== link.href"
            (click)="menuOpen = false"
         >
           {{ link.label }}
@@ -90,6 +96,7 @@ import { gsap } from 'gsap';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   menuOpen = false;
+  active = '';
   private lastScrollY = 0;
   private navbar!: HTMLElement;
 
@@ -126,6 +133,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     this.lastScrollY = currentY;
+
+    // current section = last one whose top has passed below the navbar
+    this.active = '';
+    for (const link of this.navLinks) {
+      const top = document.querySelector(link.href)?.getBoundingClientRect().top;
+      if (top !== undefined && top <= 120) this.active = link.href;
+    }
   }
 
   toggleMenu(): void {

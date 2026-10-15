@@ -6,12 +6,12 @@ export interface SkillGroup {
 }
 
 export const SKILL_GROUPS: SkillGroup[] = [
-  { category: 'Frameworks',          items: ['Angular', 'ReactJS'] },
+  { category: 'Frameworks',          items: ['Angular', 'ReactJS', 'Next.js'] },
   { category: 'UI Libraries',        items: ['PrimeNG', 'PrimeReact', 'MaterialUI', 'Tailwind CSS', 'PrimeFlex'] },
-  { category: 'Languages',           items: ['TypeScript', 'JavaScript', 'HTML', 'CSS'] },
-  { category: 'State & Reactivity',  items: ['RxJS', 'Angular Signals', 'React Hooks'] },
-  { category: 'Backend',             items: ['Node.js', 'Express.js', 'Neo4J'] },
+  { category: 'Languages',           items: ['TypeScript', 'JavaScript', 'Python', 'HTML', 'CSS'] },
+  { category: 'State & Reactivity',  items: ['Angular Signals', 'React Hooks'] },
+  { category: 'Backend & Data',      items: ['Node.js', 'Express.js', 'MySQL', 'Neo4J', 'JWT / SSO'] },
   { category: 'Tooling',             items: ['Git', 'GitKraken', 'Bitbucket', 'Docker'] },
-  { category: 'Monitoring & QA',     items: ['Elastic APM (RUM)', 'SonarQube'] },
+  { category: 'Monitoring & QA',     items: ['Elastic APM (RUM)', 'SonarQube', 'Unit Testing'] },
   { category: 'Project Management',  items: ['Jira', 'ClickUp'] },
 ];

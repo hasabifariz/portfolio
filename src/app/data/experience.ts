@@ -1,10 +1,11 @@
 // Add a job: put it at the TOP of EXPERIENCE (newest first). Set active: true only on your current job.
+// Each entry in points is one bullet.
 
 export interface TimelineItem {
   date: string;
   title: string;
   company: string;
-  desc: string;
+  points: string[];
   active: boolean;
 }
 
@@ -13,35 +14,55 @@ export const EXPERIENCE: TimelineItem[] = [
     date: 'Dec 2025 — present',
     title: 'Front-end Developer',
     company: 'PT Flexo Solusi Indonesia (Flexofast) · Contract, on-site',
-    desc: 'Merged two legacy systems into one Angular WMS codebase, built the shared UI library (data tables, dropdowns, file upload/download, barcode scanning), and unified the API service pattern. Implemented auth, RBAC, session guards, background exports, and Elastic APM error tracking in production.',
+    points: [
+      'Merged two legacy systems into one Angular WMS codebase and unified the API service pattern.',
+      'Built the shared UI library: data tables, dropdowns, file upload/download and barcode scanning.',
+      'Implemented auth, RBAC, session guards, background exports and Elastic APM error tracking in production.',
+      'Built FlexoAcademy (training LMS) and Flexo Sales CRM end to end.',
+    ],
     active: true,
   },
   {
     date: 'Sep 2024 — Mar 2025',
     title: 'Front-end Developer',
     company: 'PT ADI Consulting Indonesia · Placement at Arya Noble',
-    desc: 'Built internal web applications with ReactJS, PrimeReact, and Tailwind. Turned Figma designs into responsive interfaces and worked Jira tickets through a regular release cycle, backed by code review and SonarQube quality gates.',
+    points: [
+      'Built internal web applications with ReactJS, PrimeReact and Tailwind.',
+      'Turned Figma designs into responsive interfaces.',
+      'Worked Jira tickets through a regular release cycle, backed by code review and SonarQube quality gates.',
+    ],
     active: false,
   },
   {
     date: 'Jun 2023 — Feb 2024',
     title: 'Front-end Developer',
     company: 'PT Indocyber Global Teknologi · Placement at AXA AFI',
-    desc: 'Built UI components for claims processing and user management, integrated APIs with the backend team, and wrote responsive HTML email templates for consistent rendering across mail clients.',
+    points: [
+      'Built UI components for claims processing and user management.',
+      'Integrated APIs with the backend team.',
+      'Wrote responsive HTML email templates that render consistently across mail clients.',
+    ],
     active: false,
   },
   {
     date: 'Nov 2021 — May 2023',
     title: 'Front-end Developer',
     company: 'PT Soluix Finteknologi Indonesia',
-    desc: 'Worked across four client products — AJAIB (Bank Bumi Arta), Kawan Lama Invoice Portal, Clarity e-commerce platform, and WMS Honda — building interfaces with ReactJS and MaterialUI.',
+    points: [
+      'Built interfaces with ReactJS and MaterialUI across four client products.',
+      'Clients: AJAIB (Bank Bumi Arta), Kawan Lama Invoice Portal, Clarity e-commerce and WMS Honda.',
+    ],
     active: false,
   },
   {
     date: 'Nov 2020 — Mar 2021',
     title: 'Web Developer',
     company: 'PT Hexacore Bina Sejahtera · Projects for Telkom Indonesia',
-    desc: 'Built the ITAM IT asset management system and refactored the UIMax inventory platform, using PugHTML, Node.js, Express.js, SemanticUI, and Neo4J.',
+    points: [
+      'Built the ITAM IT asset management system for Telkom Indonesia.',
+      'Refactored the UIMax inventory platform to be easier to maintain and faster to run.',
+      'Stack: PugHTML, Node.js, Express.js, SemanticUI and Neo4J.',
+    ],
     active: false,
   },
 ];

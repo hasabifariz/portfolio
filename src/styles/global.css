@@ -22,7 +22,7 @@
   --color-ink-soft:     #333333;
   --color-muted:        #5C5C5C;
   --color-subtle:       #767676;
-  --color-faint:        #8F8F8F;
+  --color-faint:        #707070;
 
   --color-dark-footer:  #1C1C1C;
 
@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.85;
   color: var(--color-muted);
 }

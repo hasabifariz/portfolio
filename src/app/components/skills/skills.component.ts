@@ -20,18 +20,19 @@ gsap.registerPlugin(ScrollTrigger);
           <div class="section-underline"></div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-3">
+        <div class="grid md:grid-cols-2 gap-4">
           <div
             *ngFor="let group of skillGroups; let i = index"
-            class="skill-card bg-white border border-orange-border rounded-xl p-5"
+            class="skill-card group border border-orange-border rounded-xl p-5"
             [attr.data-index]="i"
           >
-            <div class="text-xs text-ink-faint font-medium tracking-widest uppercase mb-3">
+            <div class="text-xs text-ink-faint font-medium tracking-widest uppercase mb-3
+                        group-hover:text-orange transition-colors duration-300">
               {{ group.category }}
             </div>
             <div class="flex flex-wrap gap-2">
               <span *ngFor="let item of group.items"
-                    class="text-xs text-orange bg-orange-pale border border-orange-border
+                    class="chip text-xs text-orange bg-orange-pale border border-orange-border
                            px-3 py-1.5 rounded-full font-medium">
                 {{ item }}
               </span>
@@ -42,7 +43,33 @@ gsap.registerPlugin(ScrollTrigger);
       </div>
     </section>
   `,
-  styles: [`:host { display: block; }`],
+  styles: [`
+    :host { display: block; }
+
+    /* same elevation as project cards; 'translate' (not transform) so it doesn't clash with GSAP's inline transform */
+    .skill-card {
+      background: radial-gradient(120% 90% at 100% 0%, var(--color-orange-pale) 0%, #fff 45%);
+      box-shadow:
+        0 1px 2px rgba(26, 26, 26, .04),
+        0 6px 12px -6px rgba(26, 26, 26, .08),
+        0 12px 20px -12px rgba(232, 84, 26, .14);
+      transition: translate .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .skill-card:hover {
+      translate: 0 -4px;
+      border-color: var(--color-orange-soft);
+      box-shadow:
+        0 2px 4px rgba(26, 26, 26, .05),
+        0 10px 20px -8px rgba(26, 26, 26, .12),
+        0 20px 28px -16px rgba(232, 84, 26, .25);
+    }
+    .chip { transition: background .2s ease, color .2s ease, border-color .2s ease; }
+    .chip:hover { background: var(--color-orange); border-color: var(--color-orange); color: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skill-card:hover { translate: none; }
+    }
+  `],
 })
 export class SkillsComponent implements OnInit {
 

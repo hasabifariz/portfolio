@@ -22,7 +22,7 @@ module.exports = {
           soft:    '#333333',
           muted:   '#5C5C5C',
           subtle:  '#767676',
-          faint:   '#8F8F8F',
+          faint:   '#707070',
         },
       },
       animation: {

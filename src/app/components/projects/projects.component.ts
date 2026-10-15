@@ -48,7 +48,7 @@ gsap.registerPlugin(ScrollTrigger);
           <div
             #projectCard
             *ngFor="let project of projects; let i = index"
-            class="project-card group flex-none w-[85%] sm:w-80 md:w-96 h-[23rem] snap-start flex flex-col
+            class="project-card group relative flex-none w-[85%] sm:w-80 md:w-96 h-[23rem] snap-start flex flex-col
                    bg-white border border-orange-border rounded-2xl overflow-hidden"
             (mouseenter)="onCardEnter($event, i)"
             (mouseleave)="onCardLeave($event, i)"
@@ -73,11 +73,16 @@ gsap.registerPlugin(ScrollTrigger);
 
             <!-- Body -->
             <div class="p-5 flex-1 flex flex-col min-h-0">
-              <h3 class="text-base font-semibold text-ink mb-1.5 line-clamp-2 group-hover:text-orange
-                         transition-colors duration-200">
-                {{ project.title }}
+              <h3 class="text-base font-semibold text-ink mb-1.5 line-clamp-2 transition-colors duration-200"
+                  [ngClass]="{ 'group-hover:text-orange': project.link }">
+                <!-- stretched link: the whole card is clickable only when the project has a link -->
+                <a *ngIf="project.link; else plainTitle" [href]="project.link" target="_blank" rel="noopener noreferrer"
+                   class="after:absolute after:inset-0" draggable="false">
+                  {{ project.title }} <span aria-hidden="true">↗</span>
+                </a>
+                <ng-template #plainTitle>{{ project.title }}</ng-template>
               </h3>
-              <p class="text-xs text-ink-muted font-light leading-relaxed mb-4 line-clamp-4" [title]="project.description">
+              <p class="text-xs text-ink-muted leading-relaxed mb-4 line-clamp-4" [title]="project.description">
                 {{ project.description }}
               </p>
               <div class="mt-auto flex flex-wrap gap-1.5">
@@ -156,22 +161,30 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
   private dragStartX = 0;
   private dragStartLeft = 0;
 
+  private pressed = false;
+
   onDragStart(e: PointerEvent): void {
     if (e.pointerType !== 'mouse' || e.button !== 0) return; // touch scrolls natively
-    const el = this.track.nativeElement;
+    this.pressed = true;
     this.dragStartX = e.clientX;
-    this.dragStartLeft = el.scrollLeft;
-    this.dragging = true;
-    el.setPointerCapture(e.pointerId);
+    this.dragStartLeft = this.track.nativeElement.scrollLeft;
     e.preventDefault();
   }
 
   onDragMove(e: PointerEvent): void {
-    if (!this.dragging) return;
-    this.track.nativeElement.scrollLeft = this.dragStartLeft - (e.clientX - this.dragStartX);
+    if (!this.pressed) return;
+    const dx = e.clientX - this.dragStartX;
+    // only start dragging past 5px, so a plain click still reaches a card link;
+    // once captured, the release click goes to the track and doesn't open the link
+    if (!this.dragging && Math.abs(dx) > 5) {
+      this.dragging = true;
+      this.track.nativeElement.setPointerCapture(e.pointerId);
+    }
+    if (this.dragging) this.track.nativeElement.scrollLeft = this.dragStartLeft - dx;
   }
 
   onDragEnd(): void {
+    this.pressed = false;
     this.dragging = false;
   }
 
