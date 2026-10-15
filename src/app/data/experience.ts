@@ -15,10 +15,10 @@ export const EXPERIENCE: TimelineItem[] = [
     title: 'Front-end Developer',
     company: 'PT Flexo Solusi Indonesia (Flexofast) · Contract, on-site',
     points: [
-      'Merged two legacy systems into one Angular WMS codebase and unified the API service pattern.',
-      'Built the shared UI library: data tables, dropdowns, file upload/download and barcode scanning.',
+      'Merged two legacy systems into one Angular WMS codebase, with a shared UI library (data tables, file upload/download, barcode scanning) and one API service pattern.',
       'Implemented auth, RBAC, session guards, background exports and Elastic APM error tracking in production.',
-      'Built FlexoAcademy (training LMS) and Flexo Sales CRM end to end.',
+      'Built FlexoAcademy, a training platform for warehouse staff, couriers and drivers: FastAPI + MySQL backend with 80+ endpoints, JWT auth and SSO.',
+      'Built Flexo Sales CRM in Next.js to replace the shared Excel sales report: a Kanban pipeline that handles 400+ deals per stage, server-side role access and 360+ unit tests.',
     ],
     active: true,
   },
