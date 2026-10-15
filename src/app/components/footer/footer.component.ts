@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EMAIL, LINKEDIN } from '../../data/profile';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <!-- vertical padding lives on wrappers: global .container resets padding to 0 2rem -->
     <footer id="contact" class="bg-ink text-white">

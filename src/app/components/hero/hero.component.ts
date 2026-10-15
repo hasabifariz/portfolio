@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { HERO_STACK, CV_PATH } from '../../data/profile';
 import { PROJECTS } from '../../data/projects';
 import { SKILL_GROUPS } from '../../data/skills';
@@ -9,12 +9,12 @@ import { gsap } from 'gsap';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <section
       id="hero"
       class="relative isolate overflow-hidden min-h-screen flex flex-col bg-orange-warm pt-24 pb-8"
-    >
+      >
       <!-- Goo blob background -->
       <svg width="0" height="0" aria-hidden="true" class="absolute">
         <filter id="hero-goo">
@@ -28,12 +28,12 @@ import { gsap } from 'gsap';
         <div class="orbit o2"><div class="blob two"></div></div>
       </div>
       <div class="glass" aria-hidden="true"></div>
-
+    
       <!-- Content -->
       <div class="flex-1 flex flex-col items-center justify-center text-center px-6 max-w-3xl mx-auto">
-
+    
         <a href="#contact"
-           class="hero-anim opacity-0 inline-flex items-center gap-2 rounded-full border border-orange-border bg-white/70 backdrop-blur px-4 py-2 mb-8 text-xs text-ink-soft hover:border-orange transition-colors">
+          class="hero-anim opacity-0 inline-flex items-center gap-2 rounded-full border border-orange-border bg-white/70 backdrop-blur px-4 py-2 mb-8 text-xs text-ink-soft hover:border-orange transition-colors">
           <span class="relative flex h-2 w-2">
             <span class="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 motion-safe:animate-ping"></span>
             <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
@@ -41,54 +41,58 @@ import { gsap } from 'gsap';
           Available for work
           <span class="text-orange" aria-hidden="true">→</span>
         </a>
-
+    
         <h1 class="hero-anim opacity-0 text-5xl md:text-7xl font-bold text-ink mb-6"
-            style="letter-spacing:-0.035em; line-height:1.05;">
+          style="letter-spacing:-0.035em; line-height:1.05;">
           Hi, I'm <span class="text-orange">Fariz</span>.<br />
           I build web things.
         </h1>
-
+    
         <p class="hero-anim opacity-0 text-base md:text-lg text-ink-soft max-w-xl mb-8">
           Frontend developer making internal tools for logistics, finance and
           retail teams. These days I work on a warehouse management system
           from Tangerang, Indonesia.
         </p>
-
+    
         <ul class="hero-anim opacity-0 flex flex-wrap justify-center gap-2 mb-10" aria-label="Tech stack">
-          <li *ngFor="let tech of stack"
+          @for (tech of stack; track tech) {
+            <li
               class="rounded-full bg-white/60 backdrop-blur border border-orange-border/70 px-3 py-1 text-xs text-ink-muted">
-            {{ tech }}
-          </li>
+              {{ tech }}
+            </li>
+          }
         </ul>
-
+    
         <div class="hero-anim opacity-0 flex flex-wrap justify-center gap-4">
           <a href="#projects" class="btn-primary">view projects <span aria-hidden="true">→</span></a>
           <a [href]="cvPath" download class="btn-outline bg-white/60 backdrop-blur">download cv</a>
         </div>
       </div>
-
+    
       <!-- Stats -->
       <div class="hero-anim opacity-0 w-full max-w-3xl mx-auto px-6 mt-16">
         <!-- glass is its own layer: backdrop-filter would flatten the 3D numbers if it sat on the dl -->
         <div #statsCard class="stats-3d relative" (pointermove)="tilt($event)" (pointerleave)="resetTilt()">
-        <div class="glass-card absolute inset-0 rounded-2xl" aria-hidden="true"></div>
-        <dl class="relative grid grid-cols-2 md:grid-cols-4 divide-white/60 md:divide-x">
-          <div *ngFor="let stat of stats" class="flex flex-col-reverse items-center py-4 px-2">
-            <dt class="text-ink-subtle tracking-widest uppercase mt-1" style="font-size:0.625rem;">{{ stat.label }}</dt>
-            <dd class="text-2xl font-bold text-orange">{{ stat.display }}</dd>
-          </div>
-        </dl>
+          <div class="glass-card absolute inset-0 rounded-2xl" aria-hidden="true"></div>
+          <dl class="relative grid grid-cols-2 md:grid-cols-4 divide-white/60 md:divide-x">
+            @for (stat of stats; track stat) {
+              <div class="flex flex-col-reverse items-center py-4 px-2">
+                <dt class="text-ink-subtle tracking-widest uppercase mt-1" style="font-size:0.625rem;">{{ stat.label }}</dt>
+                <dd class="text-2xl font-bold text-orange">{{ stat.display }}</dd>
+              </div>
+            }
+          </dl>
         </div>
       </div>
-
+    
       <a href="#about"
-         class="hero-anim opacity-0 mx-auto mt-8 flex flex-col items-center gap-2 text-ink-faint hover:text-orange transition-colors tracking-widest uppercase"
-         style="font-size:0.625rem;">
+        class="hero-anim opacity-0 mx-auto mt-8 flex flex-col items-center gap-2 text-ink-faint hover:text-orange transition-colors tracking-widest uppercase"
+        style="font-size:0.625rem;">
         scroll to explore
         <span class="block w-px h-8 bg-current motion-safe:animate-pulse"></span>
       </a>
     </section>
-  `,
+    `,
   styles: [`
     :host { display: block; }
 

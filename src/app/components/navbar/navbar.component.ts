@@ -1,79 +1,84 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <nav
       id="navbar"
       class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-orange-border"
-    >
+      >
       <div class="container mx-auto px-8 max-w-5xl flex items-center justify-between h-16">
-
+    
         <!-- Logo -->
         <a href="#" class="text-orange text-xl font-bold tracking-tight" style="letter-spacing:-0.03em">
           fz.
         </a>
-
+    
         <!-- Nav Links -->
         <div class="hidden md:flex items-center gap-8">
-          <a *ngFor="let link of navLinks"
-             [href]="link.href"
-             class="text-xs hover:text-orange transition-colors duration-200 tracking-wide"
-             [class.text-orange]="active === link.href"
-             [class.text-ink-subtle]="active !== link.href"
-             [attr.aria-current]="active === link.href ? 'location' : null"
-          >
-            {{ link.label }}
-          </a>
+          @for (link of navLinks; track link) {
+            <a
+              [href]="link.href"
+              class="text-xs hover:text-orange transition-colors duration-200 tracking-wide"
+              [class.text-orange]="active === link.href"
+              [class.text-ink-subtle]="active !== link.href"
+              [attr.aria-current]="active === link.href ? 'location' : null"
+              >
+              {{ link.label }}
+            </a>
+          }
           <a href="#contact"
-             class="btn-primary text-xs px-5 py-2.5">
+            class="btn-primary text-xs px-5 py-2.5">
             contact me
           </a>
         </div>
-
+    
         <!-- Mobile Menu Button -->
         <button
           class="md:hidden w-11 h-11 -mr-3 flex flex-col items-center justify-center gap-1.5"
           (click)="toggleMenu()"
           aria-label="Toggle menu"
           [attr.aria-expanded]="menuOpen"
-        >
+          >
           <span class="block w-5 h-px bg-ink transition-all duration-200"
-                [class.rotate-45]="menuOpen"
-                [class.translate-y-2]="menuOpen"></span>
+            [class.rotate-45]="menuOpen"
+          [class.translate-y-2]="menuOpen"></span>
           <span class="block w-5 h-px bg-ink transition-all duration-200"
-                [class.opacity-0]="menuOpen"></span>
+          [class.opacity-0]="menuOpen"></span>
           <span class="block w-5 h-px bg-ink transition-all duration-200"
-                [class.-rotate-45]="menuOpen"
-                [class.-translate-y-2]="menuOpen"></span>
+            [class.-rotate-45]="menuOpen"
+          [class.-translate-y-2]="menuOpen"></span>
         </button>
-
+    
       </div>
-
+    
       <!-- Mobile Menu -->
-      <div
-        *ngIf="menuOpen"
-        class="md:hidden bg-white border-t border-orange-border px-8 py-4 flex flex-col gap-1"
-      >
-        <a *ngFor="let link of navLinks"
-           [href]="link.href"
-           class="text-sm py-2"
-           [class.text-orange]="active === link.href"
-           [class.text-ink-muted]="active !== link.href"
-           (click)="menuOpen = false"
-        >
-          {{ link.label }}
-        </a>
-        <a href="#contact" class="btn-primary text-xs self-start" (click)="menuOpen = false">
-          contact me
-        </a>
-      </div>
+      @if (menuOpen) {
+        <div
+          class="md:hidden bg-white border-t border-orange-border px-8 py-4 flex flex-col gap-1"
+          >
+          @for (link of navLinks; track link) {
+            <a
+              [href]="link.href"
+              class="text-sm py-2"
+              [class.text-orange]="active === link.href"
+              [class.text-ink-muted]="active !== link.href"
+              (click)="menuOpen = false"
+              >
+              {{ link.label }}
+            </a>
+          }
+          <a href="#contact" class="btn-primary text-xs self-start" (click)="menuOpen = false">
+            contact me
+          </a>
+        </div>
+      }
     </nav>
-  `,
+    `,
   styles: [`
     :host { display: block; }
     .btn-primary {

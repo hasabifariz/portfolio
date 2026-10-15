@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, AfterViewInit } from '@angular/core';
+
 import { SKILL_GROUPS } from '../../data/skills';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,40 +9,43 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <section id="skills" class="bg-orange-warm py-24">
       <div class="container mx-auto px-8 max-w-5xl">
-
+    
         <div class="skills-header mb-12">
           <div class="section-eyebrow">what I use</div>
           <h2 class="section-title">tech <span>stack</span></h2>
           <div class="section-underline"></div>
         </div>
-
+    
         <div class="grid md:grid-cols-2 gap-4">
-          <div
-            *ngFor="let group of skillGroups; let i = index"
-            class="skill-card group border border-orange-border rounded-xl p-5"
-            [attr.data-index]="i"
-          >
+          @for (group of skillGroups; track group; let i = $index) {
+            <div
+              class="skill-card group border border-orange-border rounded-xl p-5"
+              [attr.data-index]="i"
+              >
             <div class="text-xs text-ink-faint font-medium tracking-widest uppercase mb-3
                         group-hover:text-orange transition-colors duration-300">
-              {{ group.category }}
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span *ngFor="let item of group.items"
+                {{ group.category }}
+              </div>
+              <div class="flex flex-wrap gap-2">
+                @for (item of group.items; track item) {
+                  <span
                     class="chip text-xs text-orange bg-orange-pale border border-orange-border
                            px-3 py-1.5 rounded-full font-medium">
-                {{ item }}
-              </span>
+                    {{ item }}
+                  </span>
+                }
+              </div>
             </div>
-          </div>
+          }
         </div>
-
+    
       </div>
     </section>
-  `,
+    `,
   styles: [`
     :host { display: block; }
 
@@ -71,11 +74,20 @@ gsap.registerPlugin(ScrollTrigger);
     }
   `],
 })
-export class SkillsComponent implements OnInit {
+export class SkillsComponent implements AfterViewInit {
 
   skillGroups = SKILL_GROUPS;
 
-  ngOnInit(): void {
+  // AfterViewInit, not OnInit: @for cards don't exist yet in OnInit, so GSAP would find nothing
+  ngAfterViewInit(): void {
+    gsap.from('.skills-header', {
+      scrollTrigger: { trigger: '#skills', start: 'top 80%', toggleActions: 'play none none none' },
+      y: 32,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+    });
+
     gsap.from('.skill-card', {
       scrollTrigger: {
         trigger: '#skills',
